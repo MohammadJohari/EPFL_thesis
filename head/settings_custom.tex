@@ -26,3 +26,22 @@
 % %Penalty for relation and binary operation breaks in equations
 % \relpenalty=9999
 % \binoppenalty=9999
+
+\usepackage{multirow}
+\usepackage{colortbl}
+\usepackage{xcolor}
+
+\usepackage[flushleft]{threeparttable} % http://ctan.org/pkg/threeparttable
+\usepackage{booktabs}
+
+\usepackage{graphicx}
+
+\makeatletter
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
+\def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+\makeatother
+
+\emergencystretch=1em
