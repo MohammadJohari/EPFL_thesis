@@ -36,6 +36,9 @@
 
 \usepackage{graphicx}
 
+\usepackage{placeins}
+
+
 \makeatletter
 \DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
 \def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
@@ -45,3 +48,6 @@
 \makeatother
 
 \emergencystretch=1em
+
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}

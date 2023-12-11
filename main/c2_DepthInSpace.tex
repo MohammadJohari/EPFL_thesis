@@ -204,14 +204,14 @@ More details of the datasets and also implementing our models are provided in th
       \end{threeparttable}
     \end{center}
     \caption{Quantitative comparison of the SGM algorithm~\cite{hirschmuller2007stereo}, HyperDepth~\cite{ryan2016hyperdepth}, and CTD~\cite{riegler2019connecting} versus our DIS-SF, DIS-FTSF, and DIS-MF models. Numbers are percentages of outliers~$o(t)$, that is the fraction of pixels for which the estimated disparity is more than $t$ away from ground truth. We indicate in bold the best performance among single-frame methods (\ie all but our DIS-MF model, which, as expected, performs the best).}
-    \label{table:quantitative}
+    \label{table:c2_quantitative}
 \end{table}
 
 \begin{figure*}
     \begin{center}
         \includegraphics[width=1\linewidth]{images/chapter2/figures/Fig4.jpg}
     \end{center}
-   \caption{Qualitative results of the methods and their corresponding error maps. (a)~Ground truth disparity map. (b)~Input dot image with projected pattern. (c)~HyperDepth~\cite{ryan2016hyperdepth}. (d)~CTD~\cite{riegler2019connecting}. (e)~Our DIS-SF model. (f)~Our DIS-FTSF model. (g)~Our DIS-MF Model. Each row represents a sample corresponding to each dataset in Table~\ref{table:quantitative}. Points for which the ground truth data is unavailable are excluded from evaluation. For more sample images and extended qualitative evaluations, refer to the supplementary material.}
+   \caption{Qualitative results of the methods and their corresponding error maps. (a)~Ground truth disparity map. (b)~Input dot image with projected pattern. (c)~HyperDepth~\cite{ryan2016hyperdepth}. (d)~CTD~\cite{riegler2019connecting}. (e)~Our DIS-SF model. (f)~Our DIS-FTSF model. (g)~Our DIS-MF Model. Each row represents a sample corresponding to each dataset in Table~\ref{table:c2_quantitative}. Points for which the ground truth data is unavailable are excluded from evaluation. For more sample images and extended qualitative evaluations, refer to the supplementary material.}
     \label{fig:c2_results}
 \end{figure*}
 
@@ -223,7 +223,7 @@ When training either CTD or our models on the real dataset, we use the pre-train
 
 Qualitative comparison of the estimated disparities of the models on different datasets is depicted in Figure~\ref{fig:c2_results}. It is notable that all of our models produce sharper edges than the baseline model, CTD. Remarkably, our DIS-MF model best preserves the edges and is also capable of retaining high-resolution details. On the other hand, HyperDepth shows poor performance at discontinuities despite its accuracy in smooth regions. The figure also contrasts the quality of our DIS-SF and DIS-FTSF models and exhibits the usefulness of exploiting the DIS-MF model outputs to improve the accuracy of the DIS-SF model. Extended qualitative evaluations are provided in the supplementary material.
 
-Table~\ref{table:quantitative} provides the quantitative evaluation of the discussed models and shows the outcomes are consistent with the qualitative results. Table~\ref{table:quantitative} also reflects the effect of the dot pattern on the performance of algorithms, where most models have the best accuracy in the experiment with the denser Kinect dot pattern. However, our models show robustness in all experiments. Particularly, DIS-MF yields overall the best results in all the experiments. Also, among the methods that predict disparities based on a single image, our DIS-FTSF model outperforms others overall.
+Table~\ref{table:c2_quantitative} provides the quantitative evaluation of the discussed models and shows the outcomes are consistent with the qualitative results. Table~\ref{table:c2_quantitative} also reflects the effect of the dot pattern on the performance of algorithms, where most models have the best accuracy in the experiment with the denser Kinect dot pattern. However, our models show robustness in all experiments. Particularly, DIS-MF yields overall the best results in all the experiments. Also, among the methods that predict disparities based on a single image, our DIS-FTSF model outperforms others overall.
 
 For further experiments and ablation studies of the loss functions, validation masks, components of DIS-MF network, effect of imperfect disparities, utilized optical flow network, and extended qualitative analysis, refer to the supplementary material.
 
