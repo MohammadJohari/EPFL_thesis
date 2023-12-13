@@ -53,27 +53,25 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \mainmatter
 % My chapters
+\cleardoublepage
+\part{Introduction and Thesis Overview}
 \include{main/c1_Introduction}
+\cleardoublepage
+\part{Contributions}
 \include{main/c2_DepthInSpace}
 \include{main/c3_GeoNeRF}
-
-% Template chapters
-\include{main/ch1_introduction}
-\include{main/ch2_figures_tables}
+\include{main/c4_ESLAM}
 \cleardoublepage
-\part{Body 2}
-\include{main/ch3_math}
-\include{main/ch4_more_text}
+\part{Conclusions and Discussions}
 
 % use to end the last part if the thesis is composed of parts
-\addtocontents{toc}{\vspace{\normalbaselineskip}}
+% \addtocontents{toc}{\vspace{\normalbaselineskip}}
 \cleardoublepage
 \bookmarksetup{startatroot}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% TAIL: Bibliography, Appendix, CV
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\include{tail/appendix}
 \backmatter
 \include{tail/biblio}
 % Add your glossary here

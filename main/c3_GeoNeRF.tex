@@ -1,6 +1,8 @@
 \chapter{GeoNeRF: Generalizing NeRF with Geometry Priors}
 
-\section{Chapter Introduction} \label{sec:chapter3}
+\section{Chapter Abstract} \label{sec:chapter3}
+
+We present GeoNeRF, a generalizable photorealistic novel view synthesis method based on neural radiance fields. Our approach consists of two main stages: a geometry reasoner and a renderer. To render a novel view, the geometry reasoner first constructs cascaded cost volumes for each nearby source view. Then, using a Transformer-based attention mechanism and the cascaded cost volumes, the renderer infers geometry and appearance, and renders detailed images via classical volume rendering techniques. This architecture, in particular, allows sophisticated occlusion reasoning, gathering information from consistent source views. Moreover, our method can easily be fine-tuned on a single scene, and renders competitive results with per-scene optimized neural rendering methods with a fraction of computational cost. Experiments show that GeoNeRF outperforms state-of-the-art generalizable neural rendering models on various synthetic and real datasets. Lastly, with a slight modification to the geometry reasoner, we also propose an alternative model that adapts to RGBD images. This model directly exploits the depth information often available thanks to depth sensors. The implementation source code and video visualizations showcasing the obtained results can be accessed through the following link: \href{https://www.idiap.ch/paper/geonerf}{https://www.idiap.ch/paper/geonerf}.
 
 \begin{figure}[t]
     \begin{center}
@@ -8,6 +10,8 @@
     \end{center}
    \caption{Our generalizable GeoNeRF model infers complex geometries of objects in a novel scene without per-scene optimization and synthesizes novel images of higher quality than the existing works: IBRNet~\cite{wang2021ibrnet} and MVSNeRF~\cite{chen2021mvsnerf}.}
 \end{figure}
+
+\section{Chapter Introduction}
 
 Novel view synthesis is a long-standing task in computer vision and computer graphics. Neural Radiance Fields (NeRF)~\cite{mildenhall2020nerf} made a significant impact on this research area by implicitly representing the 3D structure of the scene and rendering high-quality novel images. Our work addresses the main drawback of NeRF, which is the requirement to train from scratch for every scene separately. The per-scene optimization of NeRF is lengthy and requires densely captured images from each scene.
 
@@ -247,9 +251,27 @@ where $Q(\cdot)$ maps and quantizes real depth values to depth plane indices. $B
 
 \noindent\textbf{Implementation details.} We train the generalizable GeoNeRF for 250k iterations. For each iteration, one scene is randomly sampled, and 512 rays are randomly selected as the training batch. For training on a specific scene, we only fine-tune the model for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$), in contrast to NeRF~\cite{mildenhall2020nerf} that requires 200k$\textrm{--}$500k optimization steps per scene. Since our renderer's architecture is agnostic to the number of source views, we flexibly employ a different number of source views~$V$ for training and evaluation to reduce memory usage. We use $V=6$ source views for training the generalizable model and $V=9$ for evaluation. For fine-tuning, we select $V$ based on the images' resolution and available GPU memory. Specifically, we set $V=9$ for the DTU dataset~\cite{jensen2014large} and $V=7$ for the other two datasets. We fix the number of sample points on a ray to $N_{c} = 96$ and $N_{f} = 32$ for all scenes. We utilize Adam~\cite{adam} as the optimizer with a learning rate of $5 \times 10^{-4}$ for training the generalizable model and a learning rate of $2 \times 10^{-4}$ for fine-tuning. A cosine learning rate scheduler~\cite{sgdr} without restart is also applied to the optimizer. For the details of our networks' architectures, refer to the supplementary.
 
+\begin{figure}[!t]
+    \begin{center}
+        \includegraphics[width=1.0\linewidth]{images/chapter3/figures/Qualitative.jpg}
+    \end{center}
+   \caption{Qualitative comparison of the methods on the NeRF synthetic dataset~\cite{martin2021nerf} (\textit{Ship} and \textit{Drums}) and the real forward-facing dataset~\cite{mildenhall2019llff} (\textit{Horns} and \textit{Fern}). Our proposed GeoNeRF more accurately preserves the details of the scenes while it generates fewer artifacts than IBRNet~\cite{wang2021ibrnet} and MVSNeRF~\cite{chen2021mvsnerf} (\eg the leaves in \textit{Fern} or the cymbal in \textit{Drums}). After fine-tuning our model only for 10k iterations on each individual scene ($\text{GeoNeRF}_{\text{10k}}$), the results are competitive with per-scene optimized vanilla NeRF~\cite{mildenhall2020nerf}. Compared with NeRF, GeoNeRF models produce smoother surfaces in \textit{Drums} and higher quality textures for the water in \textit{Ship} and for the floor in \textit{Horns}.}
+    \label{fig:c3_qualitative}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!t]
+    \begin{center}
+        \includegraphics[width=0.9\linewidth]{images/chapter3/figures/Fig3.jpg}
+    \end{center}
+   \caption{Qualitative comparison of our generalizable GeoNeRF model with MVSNeRF~\cite{chen2021mvsnerf}, the state-of-the-art model on the DTU dataset~\cite{jensen2014large}. Images are from DTU test scenes. Our method renders sharper images with fewer artifacts.}
+    \label{fig:c3_qualitative_dtu}
+\end{figure}
+
 \subsection{Experimental Results} We evaluate our model and provide a comparison with the original vanilla NeRF~\cite{mildenhall2020nerf} and the existing generalizable NeRF models: pixelNeRF~\cite{yu2021pixelnerf}, IBRNet~\cite{wang2021ibrnet}, and MVSNeRF~\cite{chen2021mvsnerf}. The authors of NeRFormer~\cite{reizenstein2021common} did not publish their code, did not benchmark their method on NeRF benchmarking datasets, nor test state-of-the-art generalizable NeRF models on their own dataset. They perform on par with NeRF in their experiments with scene-specific optimization and train and test their generalizable model on specific object categories separately. A quantitative comparison is provided in Tables~\ref{table:quantitative_dtu}, \ref{table:quantitative_nerf}, and \ref{table:quantitative_llff} in terms of PSNR, SSIM~\cite{wang2004image}, and LPIPS~\cite{zhang2018unreasonable}. The results show the superiority of our GeoNeRF model with respect to the previous generalizable models. Moreover, when fine-tuned on the scenes for only 10k iterations, $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF, which requires lengthy per-scene optimization. We further show that even after 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$'s results are comparable with NeRF's.
 
 The qualitative comparisons of our model with existing methods on different datasets are provided in Figures~\ref{fig:c3_qualitative} and~\ref{fig:c3_qualitative_dtu}. The images produced by our GeoNeRF model better preserve the details of the scene and contain fewer artifacts. For further qualitative analysis, an extensive ablation study, and limitations of our model, refer to the supplementary.
+
 
 \subsection{Sensitivity to Source Views} \label{sec:c3_sensitivity}
 We conducted two experiments to investigate the robustness of our model to the number and quality of input source views. We first evaluated the impact of the number of source views on our model in Table~\ref{table:n_views}. The results demonstrate the robustness to the sparsity of source views and suggest that GeoNeRF produces high-quality images even with a lower number of source images. Furthermore, we show that our method can operate with both close and distant source views. Table~\ref{table:discard_views} shows the performance when we discard $K$ nearest views to the novel pose and use the remaining source views for rendering. While distant source views are naturally less informative and degrade the quality, our model does not incur a significant decrease in performance.
@@ -313,22 +335,7 @@ To evaluate our RGBD compatible model, $\text{GeoNeRF}_{\text{+D}}$, we use the 
 \section{Conclusion}
 We proposed GeoNeRF, a generalizable learning-based novel view synthesis method that renders state-of-the-art quality images for complex scenes without per-scene optimization. Our method leverages the recent architectures in the multi-view stereo field to understand the scene's geometry and occlusions by constructing cascaded cost volumes for source views. The data coming from the source views are then aggregated through an attention-based network, and images for novel poses are synthesized conditioned on these data. An advanced algorithm to select a proper set of nearby views or an adaptive approximation of the optimal number of required cost volumes for a scene could be promising extensions to our method.
 
-\begin{figure}[!t]
-    \begin{center}
-        \includegraphics[width=1.0\linewidth]{images/chapter3/figures/Qualitative.jpg}
-    \end{center}
-   \caption{Qualitative comparison of the methods on the NeRF synthetic dataset~\cite{martin2021nerf} (\textit{Ship} and \textit{Drums}) and the real forward-facing dataset~\cite{mildenhall2019llff} (\textit{Horns} and \textit{Fern}). Our proposed GeoNeRF more accurately preserves the details of the scenes while it generates fewer artifacts than IBRNet~\cite{wang2021ibrnet} and MVSNeRF~\cite{chen2021mvsnerf} (\eg the leaves in \textit{Fern} or the cymbal in \textit{Drums}). After fine-tuning our model only for 10k iterations on each individual scene ($\text{GeoNeRF}_{\text{10k}}$), the results are competitive with per-scene optimized vanilla NeRF~\cite{mildenhall2020nerf}. Compared with NeRF, GeoNeRF models produce smoother surfaces in \textit{Drums} and higher quality textures for the water in \textit{Ship} and for the floor in \textit{Horns}.}
-    \label{fig:c3_qualitative}
-\end{figure}
-
-\begin{figure}[!t]
-    \begin{center}
-        \includegraphics[width=0.9\linewidth]{images/chapter3/figures/Fig3.jpg}
-    \end{center}
-   \caption{Qualitative comparison of our generalizable GeoNeRF model with MVSNeRF~\cite{chen2021mvsnerf}, the state-of-the-art model on the DTU dataset~\cite{jensen2014large}. Images are from DTU test scenes. Our method renders sharper images with fewer artifacts.}
-    \label{fig:c3_qualitative_dtu}
-\end{figure}
-\FloatBarrier
+\clearpage
 
 \section{Supplementary Material}
 
@@ -735,7 +742,7 @@ Our model with the experimental settings in the main article can be trained and 
 
 \begin{figure}[!t]
 	\begin{center}
-		\includegraphics[width=0.85\linewidth]{images/chapter3/figures/failure.jpg}
+		\includegraphics[width=1.0\linewidth]{images/chapter3/figures/failure.jpg}
 	\end{center}
 	\caption{Failure examples in our method where stereo reconstruction fails in the geometry reasoner for textureless areas.}
 	\label{fig:c3_failure}

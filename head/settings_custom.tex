@@ -33,11 +33,12 @@
 
 \usepackage[flushleft]{threeparttable} % http://ctan.org/pkg/threeparttable
 \usepackage{booktabs}
-
 \usepackage{graphicx}
-
 \usepackage{placeins}
 
+\usepackage{makecell}
+\usepackage{amsmath}
+\usepackage{amssymb}
 
 \makeatletter
 \DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
@@ -45,6 +46,9 @@
 
 \def\eg{\emph{e.g}\onedot} \def\Eg{\emph{E.g}\onedot}
 \def\ie{\emph{i.e}\onedot} \def\Ie{\emph{I.e}\onedot}
+
+\def\wrt{w.r.t\onedot} \def\dof{d.o.f\onedot}
+
 \makeatother
 
 \emergencystretch=1em
