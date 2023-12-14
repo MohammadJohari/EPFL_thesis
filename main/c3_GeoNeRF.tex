@@ -1,5 +1,11 @@
 \chapter{GeoNeRF: Generalizing NeRF with Geometry Priors}
 
+\begin{tcolorbox}[colback=gray!20, boxrule=1pt, colframe=black]
+  Disclaimer: This chapter is adapted from the following article – with permissions of all co-authors and the conference: \\
+
+    \textbf{Johari, M. M.}, Lepoittevin, Y., and Fleuret, F. (2022). GeoNeRF: Generalizing NeRF with Geometry Priors. In \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 18365–18375.
+\end{tcolorbox}
+
 \section{Chapter Abstract} \label{sec:chapter3}
 
 We present GeoNeRF, a generalizable photorealistic novel view synthesis method based on neural radiance fields. Our approach consists of two main stages: a geometry reasoner and a renderer. To render a novel view, the geometry reasoner first constructs cascaded cost volumes for each nearby source view. Then, using a Transformer-based attention mechanism and the cascaded cost volumes, the renderer infers geometry and appearance, and renders detailed images via classical volume rendering techniques. This architecture, in particular, allows sophisticated occlusion reasoning, gathering information from consistent source views. Moreover, our method can easily be fine-tuned on a single scene, and renders competitive results with per-scene optimized neural rendering methods with a fraction of computational cost. Experiments show that GeoNeRF outperforms state-of-the-art generalizable neural rendering models on various synthetic and real datasets. Lastly, with a slight modification to the geometry reasoner, we also propose an alternative model that adapts to RGBD images. This model directly exploits the depth information often available thanks to depth sensors. The implementation source code and video visualizations showcasing the obtained results can be accessed through the following link: \href{https://www.idiap.ch/paper/geonerf}{https://www.idiap.ch/paper/geonerf}.

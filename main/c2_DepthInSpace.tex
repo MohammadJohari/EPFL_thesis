@@ -1,5 +1,11 @@
 \chapter{DepthInSpace: Depth Estimation with Structured-Light Sensors}
 
+\begin{tcolorbox}[colback=gray!20, boxrule=1pt, colframe=black]
+  Disclaimer: This chapter is adapted from the following article – with permissions of all co-authors and the conference: \\
+
+    \textbf{Johari, M. M.}, Carta, C., and Fleuret, F. (2021). DepthInSpace: Exploitation and Fusion of Multiple Video Frames for Structured-Light Depth Estimation. In \textit{Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}, pages 6039-6048.
+\end{tcolorbox}
+
 \section{Chapter Abstract} \label{sec:chapter2}
 
 We present DepthInSpace, a self-supervised deep-learning method for depth estimation using a structured-light camera. The design of this method is motivated by the commercial use case of embedded depth sensors in nowadays smartphones. We first propose to use estimated optical flow from ambient information of multiple video frames as a complementary guide for training a single-frame depth estimation network, helping to preserve edges and reduce over-smoothing issues. Utilizing optical flow, we also propose to fuse the data of multiple video frames to get a more accurate depth map. In particular, fused depth maps are more robust in occluded areas and incur less in flying pixels artifacts. We finally demonstrate that these more precise fused depth maps can be used as self-supervision for fine-tuning a single-frame depth estimation network to improve its performance. Our models' effectiveness is evaluated and compared with state-of-the-art models on both synthetic and our newly introduced real datasets. The implementation source code, training recipe, and both synthetic and captured real datasets are available in the following link: \href{https://www.idiap.ch/paper/depthinspace}{https://www.idiap.ch/paper/depthinspace}.
