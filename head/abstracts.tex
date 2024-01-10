@@ -6,24 +6,21 @@
 \cleardoublepage
 \chapter*{Abstract}
 \markboth{Abstract}{Abstract}
-\addcontentsline{toc}{chapter}{Abstract (English/Français/Deutsch)} % adds an entry to the table of contents
+\addcontentsline{toc}{chapter}{Abstract (English/Français)} % adds an entry to the table of contents
 % put your text here
-\lipsum[1-2]
+Recent advancements in deep learning have revolutionized 3D computer vision, enabling the extraction of intricate 3D information from 2D images and video sequences. This thesis explores the application of deep learning in three crucial challenges of 3D computer vision: Depth Estimation, Novel View Synthesis, and Simultaneous Localization and Mapping (SLAM).
 
+\vspace{2ex}
+In the first part of the study, a self-supervised deep-learning method for depth estimation using a structured-light camera is proposed. Our method utilizes optical flow for improved edge preservation and reduced over-smoothing. In addition, we propose fusing depth maps from multiple video frames to enhance overall accuracy, particularly in occluded areas. Further, we demonstrate that these fused depth maps can be used for self-supervision to further improve the performance of a single-frame depth estimation network. Our models outperform state-of-the-art methods on both synthetic and real datasets.
 
+\vspace{2ex}
+In the second part of the study, a generalizable photorealistic novel view synthesis method based on neural radiance fields (NeRF) is introduced. Our approach employs a geometry reasoner and a renderer to generate high-quality images from novel viewpoints. The geometry reasoner constructs cascaded cost volumes for each nearby source view, while the renderer utilizes a Transformer-based attention mechanism to integrate information from these cost volumes and render detailed images using volume rendering techniques. This architecture enables sophisticated occlusion reasoning and allows our method to render competitive results with per-scene optimized neural rendering methods while significantly reducing computational cost. Our experiments demonstrate superiority over state-of-the-art generalizable neural rendering models on various synthetic and real datasets.
 
+\vspace{2ex}
+In the last part of the study, an efficient implicit neural representation method for dense visual SLAM is presented. The method reconstructs the scene representation while simultaneously estimating the camera position in a sequential manner from RGB-D frames with unknown poses. We incorporate recent advances in NeRF into the SLAM system, achieving both high accuracy and efficiency. The scene representation consists of multi-scale axis-aligned perpendicular feature planes and shallow decoders that decode the interpolated features into Truncated Signed Distance Field (TSDF) and RGB values. Extensive experiments on standard datasets demonstrate that our method outperforms state-of-the-art dense visual SLAM methods by more than 50\% in 3D reconstruction and camera localization while running up to 10 times faster and eliminating the need for pre-training.
 
-% German abstract
-\begin{otherlanguage}{german}
-\cleardoublepage
-\chapter*{Zusammenfassung}
-\markboth{Zusammenfassung}{Zusammenfassung}
-% put your text here
-\lipsum[1-2]
-\end{otherlanguage}
-
-
-
+\vspace{2ex}
+\textbf{Keywords:} deep learning, 3D computer vision, depth estimation, novel view synthesis, neural radiance fields (NeRF), scene reconstruction, simultaneous localization and mapping (SLAM)
 
 % French abstract
 \begin{otherlanguage}{french}
@@ -31,7 +28,21 @@
 \chapter*{Résumé}
 \markboth{Résumé}{Résumé}
 % put your text here
-\lipsum[1-2]
+Les progrès récents en matière d'apprentissage profond ont révolutionné la vision par ordinateur 3D, permettant l'extraction d'informations 3D complexes à partir d'images et de séquences vidéo 2D. Cette thèse explore l'application de l'apprentissage profond dans trois défis cruciaux de la vision par ordinateur 3D : l'estimation de la profondeur (Depth Estimation), la synthèse de vues nouvelles (Novel View Synthesis) et la localisation et la cartographie simultanées (SLAM).
+
+\vspace{2ex}
+Dans la première partie de l'étude, une méthode d'apprentissage profond auto-supervisée pour l'estimation de la profondeur à l'aide d'une caméra à lumière structurée est proposée. Notre méthode utilise le flux optique pour une meilleure préservation des bords et une réduction du sur-lissage. De plus, nous proposons de fusionner les cartes de profondeur de plusieurs images vidéo pour améliorer l'exactitude globale, en particulier dans les zones occluses. En outre, nous montrons que ces cartes de profondeur fusionnées peuvent être utilisées pour l'auto-supervision afin d'améliorer encore les performances d'un réseau d'estimation de profondeur à un seul cadre. Nos modèles surpassent les méthodes d'état de l'art sur des ensembles de données synthétiques et réelles.
+
+\vspace{2ex}
+Dans la deuxième partie de l'étude, une méthode de synthèse de vues nouvelles photoréalistes généralisables basée sur les champs de radiosité neuronaux (NeRF) est introduite. Notre approche emploie un raisonneur géométrique et un rendu pour générer des images de haute qualité à partir de points de vue nouveaux. Le raisonneur géométrique construit des volumes de coût en cascade pour chaque vue source à proximité, tandis que le rendu utilise un mécanisme d'attention basé sur Transformer pour intégrer les informations de ces volumes de coût et rendre des images détaillées à l'aide de techniques de rendu par volumes. Cette architecture permet un raisonnement d'occlusion sophistiqué et permet à notre méthode de produire des résultats compétitifs avec des méthodes de rendu neuronal optimisées par scène tout en réduisant considérablement le coût de calcul. Nos expériences démontrent une supériorité sur les modèles de rendu neuronaux généralisables de pointe sur divers ensembles de données synthétiques et réelles.
+
+\vspace{2ex}
+
+Dans la troisième partie de l'étude, une méthode efficace de représentation neurale implicite pour le SLAM visuel dense est présentée. La méthode reconstruit la représentation de la scène tout en estimant simultanément la position de la caméra de manière séquentielle à partir de trames RGB-D aux poses inconnues. Nous incorporons les récents progrès de la NeRF dans le système SLAM, obtenant à la fois une grande précision et une efficacité. La représentation de la scène est constituée de plans de caractéristiques perpendiculaires à l'axe multi-échelle et de décodeurs peu profonds qui décodent les caractéristiques interpolées en champ de distance signé tronqué (TSDF) et valeurs RVB. De vastes expérimentations sur des jeux de données standard démontrent que notre méthode surpasse les méthodes de SLAM visuel dense de pointe de plus de 50\% en termes de reconstruction 3D et de localisation de caméra tout en fonctionnant jusqu'à 10 fois plus rapidement et en éliminant le besoin de pré-formation.
+
+\vspace{2ex}
+\textbf{Mots-clés:} apprentissage profond, vision par ordinateur 3D, estimation de la profondeur, synthèse de vues nouvelles, champs de radiosité neuronaux (NeRF), reconstruction de scène, localisation et cartographie simultanées (SLAM)
+
 \end{otherlanguage}
 
 
