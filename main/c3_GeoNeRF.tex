@@ -161,40 +161,40 @@ Concerning the ubiquitousness of the embedded depth sensors in devices nowadays,
 where $Q(\cdot)$ maps and quantizes real depth values to depth plane indices. $B_{v}$ plays the role of coarse guidance of the geometry in $\text{GeoNeRF}_{\text{+D}}$. As a result of this design, the model is robust to quality and sparsity of the depth inputs.
 
 \section{Experiments} \label{sec:c3_experiments}
-\noindent\textbf{Training datasets.} We train our model on the real DTU dataset~\cite{jensen2014large} and real forward-facing datasets from LLFF~\cite{mildenhall2019llff} and IBRNet~\cite{wang2021ibrnet}. We exclude views with incorrect exposure from the DTU dataset~\cite{jensen2014large} following the practice in pixelNeRF~\cite{yu2021pixelnerf} and use the same 88 scenes for training as in pixelNeRF~\cite{yu2021pixelnerf} and MVSNeRF~\cite{chen2021mvsnerf}. Ground truth depths of DTU~\cite{jensen2014large}, provided by~\cite{yao2018mvsnet}, are the only data that is directly used for depth supervision. For samples from forward-facing datasets (35 scenes from LLFF~\cite{mildenhall2019llff} and 67 scenes from IBRNet~\cite{wang2021ibrnet}), depth supervision is in the self-supervised form. \\
+\noindent\textbf{Training datasets.} We train our model on the real DTU dataset~\citep{jensen2014large} and real forward-facing datasets from LLFF~\citep{mildenhall2019llff} and IBRNet~\citep{wang2021ibrnet}. We exclude views with incorrect exposure from the DTU dataset~\citep{jensen2014large} following the practice in pixelNeRF~\citep{yu2021pixelnerf} and use the same 88 scenes for training as in pixelNeRF~\citep{yu2021pixelnerf} and MVSNeRF~\citep{chen2021mvsnerf}. Ground truth depths of DTU~\citep{jensen2014large}, provided by~\cite{yao2018mvsnet}, are the only data that is directly used for depth supervision. For samples from forward-facing datasets (35 scenes from LLFF~\citep{mildenhall2019llff} and 67 scenes from IBRNet~\citep{wang2021ibrnet}), depth supervision is in the self-supervised form. \\
 
-\noindent\textbf{Evaluation datasets.} We evaluate our model on the 16 test scenes of DTU MVS~\cite{jensen2014large}, the 8 test scenes of real forward-facing dataset from LLFF~\cite{mildenhall2019llff}, and the 8 scenes in NeRF realistic synthetic dataset~\cite{mildenhall2020nerf}. We follow the same evaluation protocol in NeRF~\cite{mildenhall2020nerf} for the synthetic dataset~\cite{mildenhall2020nerf} and LLFF dataset~\cite{mildenhall2019llff} and the same protocol in MVSNeRF~\cite{chen2021mvsnerf} for the DTU dataset~\cite{jensen2014large}. Specifically, for LLFF~\cite{mildenhall2019llff}, we hold out $\frac{1}{8}$ of the views of the unseen scenes, and for DTU~\cite{jensen2014large}, we hold out 4 views of the unseen scenes for testing and leave the rest for fine-tuning.\\
+\noindent\textbf{Evaluation datasets.} We evaluate our model on the 16 test scenes of DTU MVS~\citep{jensen2014large}, the 8 test scenes of real forward-facing dataset from LLFF~\citep{mildenhall2019llff}, and the 8 scenes in NeRF realistic synthetic dataset~\citep{mildenhall2020nerf}. We follow the same evaluation protocol in NeRF~\citep{mildenhall2020nerf} for the NeRF synthetic dataset~\citep{mildenhall2020nerf} and LLFF dataset~\citep{mildenhall2019llff} and the same protocol in MVSNeRF~\citep{chen2021mvsnerf} for the DTU dataset~\citep{jensen2014large}. Specifically, for LLFF~\citep{mildenhall2019llff}, we hold out $\frac{1}{8}$ of the views of the unseen scenes, and for DTU~\citep{jensen2014large}, we hold out 4 views of the unseen scenes for testing and leave the rest for fine-tuning.\\
 
-\noindent\textbf{Implementation details.} We train the generalizable GeoNeRF for 250k iterations. For each iteration, one scene is randomly sampled, and 512 rays are randomly selected as the training batch. For training on a specific scene, we only fine-tune the model for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$), in contrast to NeRF~\cite{mildenhall2020nerf} that requires 200k$\textrm{--}$500k optimization steps per scene. Since our renderer's architecture is agnostic to the number of source views, we flexibly employ a different number of source views~$V$ for training and evaluation to reduce memory usage. We use $V=6$ source views for training the generalizable model and $V=9$ for evaluation. For fine-tuning, we select $V$ based on the images' resolution and available GPU memory. Specifically, we set $V=9$ for the DTU dataset~\cite{jensen2014large} and $V=7$ for the other two datasets. We fix the number of sample points on a ray to $N_{c} = 96$ and $N_{f} = 32$ for all scenes. We utilize Adam~\cite{adam} as the optimizer with a learning rate of $5 \times 10^{-4}$ for training the generalizable model and a learning rate of $2 \times 10^{-4}$ for fine-tuning. A cosine learning rate scheduler~\cite{sgdr} without restart is also applied to the optimizer. For the details of our networks' architectures, refer to the supplementary.
+\noindent\textbf{Implementation details.} We train the generalizable GeoNeRF for 250k iterations. For each iteration, one scene is randomly sampled, and 512 rays are randomly selected as the training batch. For training on a specific scene, we only fine-tune the model for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$), in contrast to NeRF~\citep{mildenhall2020nerf} that requires 200k$\textrm{--}$500k optimization steps per scene. Since our renderer's architecture is agnostic to the number of source views, we flexibly employ a different number of source views~$V$ for training and evaluation to reduce memory usage. We use $V=6$ source views for training the generalizable model and $V=9$ for evaluation. For fine-tuning, we select $V$ based on the images' resolution and available GPU memory. Specifically, we set $V=9$ for the DTU dataset~\cite{jensen2014large} and $V=7$ for the other two datasets. We fix the number of sample points on a ray to $N_{c} = 96$ and $N_{f} = 32$ for all scenes. We utilize Adam~\citep{adam} as the optimizer with a learning rate of $5 \times 10^{-4}$ for training the generalizable model and a learning rate of $2 \times 10^{-4}$ for fine-tuning. A cosine learning rate scheduler~\citep{sgdr} without restart is also applied to the optimizer. For the details of our networks' architectures, refer to Section~\ref{sec:c3_supp_details}.
 
 \begin{table}[t]
     \begin{center}
         \begin{threeparttable}
             \begin{tabular}{l|c|ccc}
             \hline
-            \multicolumn{5}{c}{DTU MVS Dataset~\cite{jensen2014large}~\tnote{\dag}} \\
+            \multicolumn{5}{c}{DTU MVS Dataset~\citep{jensen2014large}~\tnote{\dag}} \\
             \hline
             Method & Settings & PSNR$\uparrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$ \\
             \hline
-            pixelNeRF~\cite{yu2021pixelnerf} &  & 19.31 & 0.789 & 0.382  \\
-            IBRNet~\cite{wang2021ibrnet} & No per-scene & 26.04 & 0.917 & 0.190 \\
-            MVSNeRF~\cite{chen2021mvsnerf} & Optimization & \underline{26.63} & \underline{0.931} & \underline{0.168} \\
+            pixelNeRF~\citep{yu2021pixelnerf} &  & 19.31 & 0.789 & 0.382  \\
+            IBRNet~\citep{wang2021ibrnet} & No per-scene & 26.04 & 0.917 & 0.190 \\
+            MVSNeRF~\citep{chen2021mvsnerf} & Optimization & \underline{26.63} & \underline{0.931} & \underline{0.168} \\
             GeoNeRF &  & \textbf{31.34} & \textbf{0.959} & \textbf{0.060} \\
             \hline
-            IBRNet~\cite{wang2021ibrnet} &  & 31.35 & 0.956 & \underline{0.131} \\
-            MVSNeRF~\cite{chen2021mvsnerf} & \multirow{2}{*}{Per-scene} & 28.50 & 0.933 & 0.179  \\
-            NeRF~\cite{mildenhall2020nerf} & \multirow{2}{*}{Optimization} & 27.01 & 0.902 & 0.263 \\
+            IBRNet~\citep{wang2021ibrnet} &  & 31.35 & 0.956 & \underline{0.131} \\
+            MVSNeRF~\citep{chen2021mvsnerf} & \multirow{2}{*}{Per-scene} & 28.50 & 0.933 & 0.179  \\
+            NeRF~\citep{mildenhall2020nerf} & \multirow{2}{*}{Optimization} & 27.01 & 0.902 & 0.263 \\
             $\text{GeoNeRF}_{\text{10k}}$ &  & \textbf{31.66} & \textbf{0.961} & \textbf{0.059} \\
             $\text{GeoNeRF}_{\text{1k}}$ &  & \underline{31.52} & \underline{0.960} & \textbf{0.059} \\
             \hline
             \end{tabular}
             \begin{tablenotes}
                 \small
-                \item[\dag] The evaluations of the baselines on the DTU MVS dataset~\cite{jensen2014large} are borrowed from the paper MVSNeRF~\cite{chen2021mvsnerf}. Also, metrics are calculated for all methods on this dataset on foreground pixels, whose ground truth depths stand inside the scene bound.
+                \item[\dag] The evaluations of the baselines on the DTU MVS dataset~\citep{jensen2014large} are borrowed from the paper MVSNeRF~\citep{chen2021mvsnerf}. Also, metrics are calculated for all methods on this dataset on foreground pixels, whose ground truth depths stand inside the scene bound.
             \end{tablenotes}
         \end{threeparttable}
     \end{center}
-    \caption{Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics on the DTU MVS Dataset~\cite{jensen2014large}. Highlights are \textbf{best} and \underline{second best}. GeoNeRF is superior to the existing approaches in the experiments in which the methods are evaluated without any per-scene optimization (the top row). Notably, GeoNeRF outperforms others with a significant margin on this dataset which has relatively sparser source views. The bottom row of the table presents the evaluation of the methods when they are fine-tuned on each scene separately, as well as a comparison with vanilla NeRF~\cite{mildenhall2020nerf}, which is per-scene optimized. After fine-tuning for only 10k iterations, our $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF. Remarkably, even after fine-tuning for 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$ reaches 99.81\% of the $\text{GeoNeRF}_{\text{10k}}$'s performance on average, which is another evidence for efficient convergence of our model on novel scenes.}
+    \caption{Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics on the DTU MVS Dataset~\citep{jensen2014large}. Highlights are \textbf{best} and \underline{second best}. GeoNeRF is superior to the existing approaches in the experiments in which the methods are evaluated without any per-scene optimization (the top row). Notably, GeoNeRF outperforms others with a significant margin on this dataset which has relatively sparser source views. The bottom row of the table presents the evaluation of the methods when they are fine-tuned on each scene separately, as well as a comparison with vanilla NeRF~\citep{mildenhall2020nerf}, which is per-scene optimized. After fine-tuning for only 10k iterations, our $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF. Remarkably, even after fine-tuning for 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$ reaches 99.81\% of the $\text{GeoNeRF}_{\text{10k}}$'s performance on average, which is another evidence for efficient convergence of our model on novel scenes.}
     \label{table:quantitative_dtu}
 \end{table}
 
@@ -203,35 +203,35 @@ where $Q(\cdot)$ maps and quantizes real depth values to depth plane indices. $B
         \begin{threeparttable}
             \begin{tabular}{l|c|ccc}
             \hline
-            \multicolumn{5}{c}{NeRF Realistic Synthetic Dataset~\cite{mildenhall2020nerf}} \\
+            \multicolumn{5}{c}{NeRF Realistic Synthetic Dataset~\citep{mildenhall2020nerf}} \\
             \hline
             Method & Settings & PSNR$\uparrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$ \\
             \hline
-            pixelNeRF~\cite{yu2021pixelnerf} &  & \phantom{0}7.39 & 0.658 & 0.411 \\
-            IBRNet~\cite{wang2021ibrnet} & No per-scene &  \underline{25.49} & \underline{0.916} & \underline{0.100} \\
-            MVSNeRF~\cite{chen2021mvsnerf} & Optimization &  23.62 & 0.897 & 0.176 \\
+            pixelNeRF~\citep{yu2021pixelnerf} &  & \phantom{0}7.39 & 0.658 & 0.411 \\
+            IBRNet~\citep{wang2021ibrnet} & No per-scene &  \underline{25.49} & \underline{0.916} & \underline{0.100} \\
+            MVSNeRF~\citep{chen2021mvsnerf} & Optimization &  23.62 & 0.897 & 0.176 \\
             GeoNeRF &  &  \textbf{28.33} & \textbf{0.938} & \textbf{0.087}  \\
             \hline
-            IBRNet~\cite{wang2021ibrnet} &  & 28.14 & 0.942 & 0.072 \\
-            MVSNeRF~\cite{chen2021mvsnerf}~\tnote{\dag} & \multirow{2}{*}{Per-scene} & 27.07 & 0.931 & 0.168 \\
-            NeRF~\cite{mildenhall2020nerf} & \multirow{2}{*}{Optimization} & \textbf{31.01} & 0.947 & 0.081 \\
+            IBRNet~\citep{wang2021ibrnet} &  & 28.14 & 0.942 & 0.072 \\
+            MVSNeRF~\citep{chen2021mvsnerf}~\tnote{\dag} & \multirow{2}{*}{Per-scene} & 27.07 & 0.931 & 0.168 \\
+            NeRF~\citep{mildenhall2020nerf} & \multirow{2}{*}{Optimization} & \textbf{31.01} & 0.947 & 0.081 \\
             $\text{GeoNeRF}_{\text{10k}}$ &  & \underline{30.42} & \textbf{0.956} & \textbf{0.055} \\
             $\text{GeoNeRF}_{\text{1k}}$ &  & 29.83 & \underline{0.952} & \underline{0.061} \\
             \hline
             \end{tabular}
             \begin{tablenotes}
                 \small
-                \item[\dag] For fine-tuning, MVSNeRF~\cite{chen2021mvsnerf} discards its CNNs and directly optimizes 3D features. Direct optimization without regularization severely suffers from overfitting which is not reflected in their reported accuracy because their evaluation is done on a custom test set instead of the standard one. \textit{E.g.}, their PSNR on NeRF dataset~\cite{mildenhall2020nerf} would drop from \textbf{27.07} to \textbf{20.02} if it was evaluated on the standard test set.
+                \item[\dag] For fine-tuning, MVSNeRF~\citep{chen2021mvsnerf} discards its CNNs and directly optimizes 3D features. Direct optimization without regularization severely suffers from overfitting which is not reflected in their reported accuracy because their evaluation is done on a custom test set instead of the standard one. \textit{E.g.}, their PSNR on NeRF dataset~\citep{mildenhall2020nerf} would drop from \textbf{27.07} to \textbf{20.02} if it was evaluated on the standard test set.
             \end{tablenotes}
         \end{threeparttable}
     \end{center}
-    \caption{Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics on the NeRF realistic synthetic Dataset~\cite{mildenhall2020nerf}. Highlights are \textbf{best} and \underline{second best}. GeoNeRF is superior to the existing approaches in the experiments in which the methods are evaluated without any per-scene optimization (the top row). Notably, GeoNeRF outperforms others with a significant margin on this dataset which has relatively sparser source views. It is also worth noting that our method generalizes outstandingly well on the NeRF synthetic dataset~\cite{mildenhall2020nerf} although our training dataset only contains real scenes which greatly differ from the synthetic scenes. The bottom row of the table presents the evaluation of the methods when they are fine-tuned on each scene separately, as well as a comparison with vanilla NeRF~\cite{mildenhall2020nerf}, which is per-scene optimized for 500k iterations. After fine-tuning for only 10k iterations, our $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF. Remarkably, even after fine-tuning for 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$ reaches 95.91\% of the $\text{GeoNeRF}_{\text{10k}}$'s performance on average, which is another evidence for efficient convergence of our model on novel scenes.}
+    \caption{Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics on the NeRF realistic synthetic Dataset~\citep{mildenhall2020nerf}. Highlights are \textbf{best} and \underline{second best}. GeoNeRF is superior to the existing approaches in the experiments in which the methods are evaluated without any per-scene optimization (the top row). Notably, GeoNeRF outperforms others with a significant margin on this dataset which has relatively sparser source views. It is also worth noting that our method generalizes outstandingly well on the NeRF synthetic dataset~\citep{mildenhall2020nerf} although our training dataset only contains real scenes which greatly differ from the synthetic scenes. The bottom row of the table presents the evaluation of the methods when they are fine-tuned on each scene separately, as well as a comparison with vanilla NeRF~\citep{mildenhall2020nerf}, which is per-scene optimized for 500k iterations. After fine-tuning for only 10k iterations, our $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF. Remarkably, even after fine-tuning for 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$ reaches 95.91\% of the $\text{GeoNeRF}_{\text{10k}}$'s performance on average, which is another evidence for efficient convergence of our model on novel scenes.}
     \label{table:quantitative_nerf}
 \end{table}
 
-\subsection{Experimental Results} We evaluate our model and provide a comparison with the original vanilla NeRF~\cite{mildenhall2020nerf} and the existing generalizable NeRF models: pixelNeRF~\cite{yu2021pixelnerf}, IBRNet~\cite{wang2021ibrnet}, and MVSNeRF~\cite{chen2021mvsnerf}. The authors of NeRFormer~\cite{reizenstein2021common} did not publish their code, did not benchmark their method on NeRF benchmarking datasets, nor test state-of-the-art generalizable NeRF models on their own dataset. They perform on par with NeRF in their experiments with scene-specific optimization and train and test their generalizable model on specific object categories separately. A quantitative comparison is provided in Tables~\ref{table:quantitative_dtu}, \ref{table:quantitative_nerf}, and \ref{table:quantitative_llff} in terms of PSNR, SSIM~\cite{wang2004image}, and LPIPS~\cite{zhang2018unreasonable}. The results show the superiority of our GeoNeRF model with respect to the previous generalizable models. Moreover, when fine-tuned on the scenes for only 10k iterations, $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF, which requires lengthy per-scene optimization. We further show that even after 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$'s results are comparable with NeRF's.
+\subsection{Experimental Results} We evaluate our model and provide a comparison with the original vanilla NeRF~\citep{mildenhall2020nerf} and the existing generalizable NeRF models: pixelNeRF~\citep{yu2021pixelnerf}, IBRNet~\citep{wang2021ibrnet}, and MVSNeRF~\citep{chen2021mvsnerf}. The authors of NeRFormer~\citep{reizenstein2021common} did not publish their code, did not benchmark their method on NeRF benchmarking datasets, nor test state-of-the-art generalizable NeRF models on their own dataset. They perform on par with NeRF in their experiments with scene-specific optimization and train and test their generalizable model on specific object categories separately. A quantitative comparison is provided in Tables~\ref{table:quantitative_dtu}, \ref{table:quantitative_nerf}, and \ref{table:quantitative_llff} in terms of PSNR, SSIM~\citep{wang2004image}, and LPIPS~\citep{zhang2018unreasonable}. The results show the superiority of our GeoNeRF model with respect to the previous generalizable models. Moreover, when fine-tuned on the scenes for only 10k iterations, $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF, which requires lengthy per-scene optimization. We further show that even after 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$'s results are comparable with NeRF's.
 
-The qualitative comparisons of our model with existing methods on different datasets are provided in Figures~\ref{fig:c3_qualitative} and~\ref{fig:c3_qualitative_dtu}. The images produced by our GeoNeRF model better preserve the details of the scene and contain fewer artifacts. For further qualitative analysis, an extensive ablation study, and limitations of our model, refer to the supplementary.
+The qualitative comparisons of our model with existing methods on different datasets are provided in Figures~\ref{fig:c3_qualitative} and~\ref{fig:c3_qualitative_dtu}. The images produced by our GeoNeRF model better preserve the details of the scene and contain fewer artifacts. For further qualitative analysis, an extensive ablation study, and limitations of our model, refer to the supplementary material in Section~\ref{sec:c3_supp}.
 
 \FloatBarrier
 
@@ -240,25 +240,25 @@ The qualitative comparisons of our model with existing methods on different data
         \begin{threeparttable}
             \begin{tabular}{l|c|ccc}
             \hline
-            \multicolumn{5}{c}{Real Forward Facing~\cite{mildenhall2019llff}} \\
+            \multicolumn{5}{c}{Real Forward Facing~\citep{mildenhall2019llff}} \\
             \hline
             Method & Settings & PSNR$\uparrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$ \\
             \hline
-            pixelNeRF~\cite{yu2021pixelnerf} &  & 11.24 & 0.486 & 0.671 \\
-            IBRNet~\cite{wang2021ibrnet} & No per-scene & \underline{25.13} & \underline{0.817} & \underline{0.205} \\
-            MVSNeRF~\cite{chen2021mvsnerf} & Optimization & 21.93 & 0.795 & 0.252 \\
+            pixelNeRF~\citep{yu2021pixelnerf} &  & 11.24 & 0.486 & 0.671 \\
+            IBRNet~\citep{wang2021ibrnet} & No per-scene & \underline{25.13} & \underline{0.817} & \underline{0.205} \\
+            MVSNeRF~\citep{chen2021mvsnerf} & Optimization & 21.93 & 0.795 & 0.252 \\
             GeoNeRF &  & \textbf{25.44} & \textbf{0.839} & \textbf{0.180} \\
             \hline
-            IBRNet~\cite{wang2021ibrnet} &  & \textbf{26.73} & 0.851 & 0.175 \\
-            MVSNeRF~\cite{chen2021mvsnerf} & \multirow{2}{*}{Per-scene} & 25.45 & \textbf{0.877} & 0.192 \\
-            NeRF~\cite{mildenhall2020nerf} & \multirow{2}{*}{Optimization} & 26.50 & 0.811 & 0.250 \\
+            IBRNet~\citep{wang2021ibrnet} &  & \textbf{26.73} & 0.851 & 0.175 \\
+            MVSNeRF~\citep{chen2021mvsnerf} & \multirow{2}{*}{Per-scene} & 25.45 & \textbf{0.877} & 0.192 \\
+            NeRF~\citep{mildenhall2020nerf} & \multirow{2}{*}{Optimization} & 26.50 & 0.811 & 0.250 \\
             $\text{GeoNeRF}_{\text{10k}}$ &  & \underline{26.58} & \underline{0.856} & \textbf{0.162} \\
             $\text{GeoNeRF}_{\text{1k}}$ &  & 26.31 & 0.852 & \underline{0.164} \\
             \hline
             \end{tabular}
         \end{threeparttable}
     \end{center}
-    \caption{Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics on the Real Forward Facing~\cite{mildenhall2019llff}. Highlights are \textbf{best} and \underline{second best}. GeoNeRF is superior to the existing approaches in all experiments in which the methods are evaluated without any per-scene optimization (the top row). The bottom row of the table presents the evaluation of the methods when they are fine-tuned on each scene separately, as well as a comparison with vanilla NeRF~\cite{mildenhall2020nerf}, which is per-scene optimized for 200k iterations. After fine-tuning for only 10k iterations, our $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF. Remarkably, even after fine-tuning for 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$ reaches 99.10\% of the $\text{GeoNeRF}_{\text{10k}}$'s performance on average, which is another evidence for efficient convergence of our model on novel scenes.}
+    \caption{Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics on the Real Forward Facing~\citep{mildenhall2019llff}. Highlights are \textbf{best} and \underline{second best}. GeoNeRF is superior to the existing approaches in all experiments in which the methods are evaluated without any per-scene optimization (the top row). The bottom row of the table presents the evaluation of the methods when they are fine-tuned on each scene separately, as well as a comparison with vanilla NeRF~\citep{mildenhall2020nerf}, which is per-scene optimized for 200k iterations. After fine-tuning for only 10k iterations, our $\text{GeoNeRF}_{\text{10k}}$ produces competitive results with NeRF. Remarkably, even after fine-tuning for 1k iterations (approximately one hour on a single V100 GPU), $\text{GeoNeRF}_{\text{1k}}$ reaches 99.10\% of the $\text{GeoNeRF}_{\text{10k}}$'s performance on average, which is another evidence for efficient convergence of our model on novel scenes.}
     \label{table:quantitative_llff}
 \end{table}
 
@@ -269,7 +269,7 @@ We conducted two experiments to investigate the robustness of our model to the n
     \begin{center}
         \includegraphics[width=1.0\linewidth]{images/chapter3/figures/Qualitative.jpg}
     \end{center}
-   \caption{Qualitative comparison of the methods on the NeRF synthetic dataset~\cite{martin2021nerf} (\textit{Ship} and \textit{Drums}) and the real forward-facing dataset~\cite{mildenhall2019llff} (\textit{Horns} and \textit{Fern}). Our proposed GeoNeRF more accurately preserves the details of the scenes while it generates fewer artifacts than IBRNet~\cite{wang2021ibrnet} and MVSNeRF~\cite{chen2021mvsnerf} (\eg the leaves in \textit{Fern} or the cymbal in \textit{Drums}). After fine-tuning our model only for 10k iterations on each individual scene ($\text{GeoNeRF}_{\text{10k}}$), the results are competitive with per-scene optimized vanilla NeRF~\cite{mildenhall2020nerf}. Compared with NeRF, GeoNeRF models produce smoother surfaces in \textit{Drums} and higher quality textures for the water in \textit{Ship} and for the floor in \textit{Horns}.}
+   \caption{Qualitative comparison of the methods on the NeRF synthetic dataset~\citep{martin2021nerf} (\textit{Ship} and \textit{Drums}) and the real forward-facing dataset~\citep{mildenhall2019llff} (\textit{Horns} and \textit{Fern}). Our proposed GeoNeRF more accurately preserves the details of the scenes while it generates fewer artifacts than IBRNet~\citep{wang2021ibrnet} and MVSNeRF~\citep{chen2021mvsnerf} (\eg the leaves in \textit{Fern} or the cymbal in \textit{Drums}). After fine-tuning our model only for 10k iterations on each individual scene ($\text{GeoNeRF}_{\text{10k}}$), the results are competitive with per-scene optimized vanilla NeRF~\citep{mildenhall2020nerf}. Compared with NeRF, GeoNeRF models produce smoother surfaces in \textit{Drums} and higher quality textures for the water in \textit{Ship} and for the floor in \textit{Horns}.}
     \label{fig:c3_qualitative}
 \end{figure}
 
@@ -279,12 +279,12 @@ We conducted two experiments to investigate the robustness of our model to the n
     \begin{center}
         \includegraphics[width=0.9\linewidth]{images/chapter3/figures/Fig3.jpg}
     \end{center}
-   \caption{Qualitative comparison of our generalizable GeoNeRF model with MVSNeRF~\cite{chen2021mvsnerf}, the state-of-the-art model on the DTU dataset~\cite{jensen2014large}. Images are from DTU test scenes. Our method renders sharper images with fewer artifacts.}
+   \caption{Qualitative comparison of our generalizable GeoNeRF model with MVSNeRF~\citep{chen2021mvsnerf}, the state-of-the-art model on the DTU dataset~\citep{jensen2014large}. Images are from DTU test scenes. Our method renders sharper images with fewer artifacts.}
     \label{fig:c3_qualitative_dtu}
 \end{figure}
 
 \subsection{Results with RGBD Images} \label{sec:c3_rgbd}
-To evaluate our RGBD compatible model, $\text{GeoNeRF}_{\text{+D}}$, we use the DTU dataset~\cite{jensen2014large} to mimic the real scenario where incomplete, low-resolution depth images accompany RGB images. We feed our model the DTU images with a resolution of $600 \times 800$, while we resize their incomplete depths to $150 \times 200$. The comparison of the performance of GeoNeRF, with and without depth inputs is presented in Table~\ref{table:rgbd}. The results confirm that our $\text{GeoNeRF}_{\text{+D}}$ model adapts to RGBD images and renders higher quality outputs.
+To evaluate our RGBD compatible model, $\text{GeoNeRF}_{\text{+D}}$, we use the DTU dataset~\citep{jensen2014large} to mimic the real scenario where incomplete, low-resolution depth images accompany RGB images. We feed our model the DTU images with a resolution of $600 \times 800$, while we resize their incomplete depths to $150 \times 200$. The comparison of the performance of GeoNeRF, with and without depth inputs is presented in Table~\ref{table:rgbd}. The results confirm that our $\text{GeoNeRF}_{\text{+D}}$ model adapts to RGBD images and renders higher quality outputs.
 
 \section{Conclusion}
 We proposed GeoNeRF, a generalizable learning-based novel view synthesis method that renders state-of-the-art quality images for complex scenes without per-scene optimization. Our method leverages the recent architectures in the multi-view stereo field to understand the scene's geometry and occlusions by constructing cascaded cost volumes for source views. The data coming from the source views are then aggregated through an attention-based network, and images for novel poses are synthesized conditioned on these data. An advanced algorithm to select a proper set of nearby views or an adaptive approximation of the optimal number of required cost volumes for a scene could be promising extensions to our method.
@@ -303,11 +303,11 @@ We proposed GeoNeRF, a generalizable learning-based novel view synthesis method 
         8 & 25.39 & 0.838 & 0.179  \\
         9 & \textbf{25.44} & \textbf{0.839} & 0.180  \\
         \hline
-        IBRNet~\cite{wang2021ibrnet} (10 views) & 25.13 & 0.817 & 0.205  \\
+        IBRNet~\citep{wang2021ibrnet} (uses 10 views) & 25.13 & 0.817 & 0.205  \\
         \hline
         \end{tabular}
     \end{center}
-    \caption{Quantitative analysis of the robustness of our GeoNeRF to the number of input source views on the LLFF~\cite{mildenhall2019llff} test scenes, besides a comparison with IBRNet~\cite{wang2021ibrnet}, which uses 10 source views.}
+    \caption{Quantitative analysis of the robustness of our GeoNeRF to the number of input source views on the LLFF~\citep{mildenhall2019llff} test scenes, besides a comparison with IBRNet~\citep{wang2021ibrnet}, which uses 10 source views.}
     \label{table:n_views}
 \end{table}
 
@@ -323,7 +323,7 @@ We proposed GeoNeRF, a generalizable learning-based novel view synthesis method 
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Quantitative analysis of the sensitivity of our GeoNeRF to discarded first $K$ nearest neighbors on the LLFF~\cite{mildenhall2019llff} test scenes.}
+	\caption{Quantitative analysis of the sensitivity of our GeoNeRF to discarded first $K$ nearest neighbors on the LLFF~\citep{mildenhall2019llff} test scenes.}
 	\label{table:discard_views}
 \end{table}
 
@@ -331,25 +331,25 @@ We proposed GeoNeRF, a generalizable learning-based novel view synthesis method 
 \begin{center}
         \begin{tabular}{l|ccc}
         \hline
-        Model & \small PSNR$\uparrow$ & \small SSIM$\uparrow$ & \small LPIPS$\downarrow$  \\
+        Model & PSNR$\uparrow$ & SSIM$\uparrow$ & LPIPS$\downarrow$  \\
         \hline
         GeoNeRF & 31.34 & 0.959 & 0.060  \\
         $\text{GeoNeRF}_{\text{+D}}$  & \textbf{31.58} & \textbf{0.961} & \textbf{0.057} \\
         \hline
         \end{tabular}
     \end{center}
-    \caption{A comparison of the performance of our RGBD compatible $\text{GeoNeRF}_{\text{+D}}$ and original GeoNeRF on DTU~\cite{jensen2014large} test scenes. For the details of this experiment, see Section~\ref{sec:c3_rgbd}.}
+    \caption{A comparison of the performance of our RGBD compatible $\text{GeoNeRF}_{\text{+D}}$ and original GeoNeRF on DTU~\citep{jensen2014large} test scenes. For the details of this experiment, see Section~\ref{sec:c3_rgbd}.}
     \label{table:rgbd}
 \end{table}
 
 \FloatBarrier
 \clearpage
 
-\section{Supplementary Material}
+\section{Supplementary Material} \label{sec:c3_supp}
 
-\subsection{Additional Technical Details}
+\subsection{Additional Technical Details} \label{sec:c3_supp_details}
 
-As stated in the main article, we borrow the architecture of our geometry reasoner from CasMVSNet~\cite{gu2020cascade}. We construct $D^{(2)} = 48$ depth planes for the coarsest cost volume, $D^{(1)} = 32$ for the intermediate one, and $D^{(0)} = 8$ for the finest full-resolution cost volume. We use channel size $C = 8$ in group-wise correlation similarity calculations. When training the generalizable model, we create a set of 3$\textrm{--}$5 nearby source views for constructing each cost volume, whereas for fine-tuning and evaluating, we always use a set of 5 nearby views. Also, we scale input images with a factor uniformly sampled from $\{$1.0, 0.75, 0.5$\}$ when we train our generalizable model.
+As stated in Section~\ref{sec:c3_geometry}, we borrow the architecture of our geometry reasoner from CasMVSNet~\cite{gu2020cascade}. We construct $D^{(2)} = 48$ depth planes for the coarsest cost volume, $D^{(1)} = 32$ for the intermediate one, and $D^{(0)} = 8$ for the finest full-resolution cost volume. We use channel size $C = 8$ in group-wise correlation similarity calculations. When training the generalizable model, we create a set of 3$\textrm{--}$5 nearby source views for constructing each cost volume, whereas for fine-tuning and evaluating, we always use a set of 5 nearby views. Also, we scale input images with a factor uniformly sampled from $\{$1.0, 0.75, 0.5$\}$ when we train our generalizable model.
 
 The network architectures of Feature Pyramid Network (FPN), 3D regularizer ($R^{(l)}_{3D}$), and the auto-encoder (AE) are provided in Tables~\ref{table:arch_fpn}, \ref{table:arch_reg3D}, and \ref{table:arch_ae} respectively.
 
@@ -382,7 +382,6 @@ The network architectures of Feature Pyramid Network (FPN), 3D regularizer ($R^{
     \label{table:arch_fpn}
     \vspace{4ex}
 \end{table}
-
 
 \begin{table}[t]
     \begin{center}
@@ -442,16 +441,16 @@ The network architectures of Feature Pyramid Network (FPN), 3D regularizer ($R^{
 \clearpage
 
 \subsection{Additional Qualitative Analysis}
-Full-size examples of rendered images for novel views by our GeoNeRF model are presented in Figures~\ref{fig:c3_supp_llff} and \ref{fig:c3_supp_nerf}. Figure~\ref{fig:c3_supp_llff} includes samples from the real forward-facing LLFF dataset~\cite{mildenhall2019llff}, and Figure~\ref{fig:c3_supp_nerf} contains samples from the NeRF realistic synthetic dataset\cite{mildenhall2020nerf}. In addition to the rendered images, we also show the rendered depth maps for each novel view. Images indicated by GeoNeRF are rendered by our generalizable model, while images indicated by $\text{GeoNeRF}_{\text{10k}}$ are rendered after fine-tuning our model on each scene for 10k iterations.
+Full-size examples of rendered images for novel views by our GeoNeRF model are presented in Figures~\ref{fig:c3_supp_llff} and \ref{fig:c3_supp_nerf}. Figure~\ref{fig:c3_supp_llff} includes samples from the real forward-facing LLFF dataset~\citep{mildenhall2019llff}, and Figure~\ref{fig:c3_supp_nerf} contains samples from the NeRF realistic synthetic dataset\citep{mildenhall2020nerf}. In addition to the rendered images, we also show the rendered depth maps for each novel view. Images indicated by GeoNeRF are rendered by our generalizable model, while images indicated by $\text{GeoNeRF}_{\text{10k}}$ are rendered after fine-tuning our model on each scene for 10k iterations.
 
 \subsection{Per-Scene Breakdown}
-Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{table:per_scene_no_ft_nerf}, and \ref{table:per_scene_ft_nerf} break down the quantitative results presented in the main paper into per-scene metrics. The results are consistent with the aggregate results in the main paper.  Tables~\ref{table:per_scene_no_ft_llff} and \ref{table:per_scene_ft_llff} include the scenes from the real forward-facing LLFF dataset~\cite{mildenhall2019llff}, and Tables~\ref{table:per_scene_no_ft_nerf} and \ref{table:per_scene_ft_nerf} contain the scenes from NeRF realistic synthetic dataset~\cite{mildenhall2020nerf}. As it was already shown in the main paper, our generalizable GeoNeRF model outperforms all existing generalizable methods on average, and after fine-tuning, it is on par with per-scene optimized vanilla NeRF~\cite{mildenhall2020nerf}.
+Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{table:per_scene_no_ft_nerf}, and \ref{table:per_scene_ft_nerf} break down the quantitative results presented in Section~\ref{sec:c3_experiments} into per-scene metrics. The results are consistent with the aggregate results in Tables~\ref{table:quantitative_nerf} and \ref{table:quantitative_llff}. More specifically, Tables~\ref{table:per_scene_no_ft_llff} and \ref{table:per_scene_ft_llff} include the scenes from the real forward-facing LLFF dataset~\citep{mildenhall2019llff}, and Tables~\ref{table:per_scene_no_ft_nerf} and \ref{table:per_scene_ft_nerf} contain the scenes from NeRF realistic synthetic dataset~\citep{mildenhall2020nerf}. As it was already shown in Section~\ref{sec:c3_experiments}, our generalizable GeoNeRF model outperforms all existing generalizable methods on average, and after fine-tuning, it is on par with per-scene optimized vanilla NeRF~\citep{mildenhall2020nerf}.
 
 \begin{figure}[t]
     \begin{center}
         \includegraphics[width=1.0\linewidth]{images/chapter3/figures/supp1.jpg}
     \end{center}
-   \caption{Full-size examples of novel images and their depth map rendered by our generalizable (GeoNeRF) and fine-tuned ($\text{GeoNeRF}_{\text{10k}}$) models. The images are from test scenes of the real forward-facing LLFF dataset~\cite{mildenhall2019llff}.}
+   \caption{Full-size examples of novel images and their depth map rendered by our generalizable (GeoNeRF) and fine-tuned ($\text{GeoNeRF}_{\text{10k}}$) models. The images are from test scenes of the real forward-facing LLFF dataset~\citep{mildenhall2019llff}.}
     \label{fig:c3_supp_llff}
 \end{figure}
 
@@ -459,8 +458,7 @@ Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{tab
     \begin{center}
         \includegraphics[width=1.0\linewidth]{images/chapter3/figures/supp2.jpg}
     \end{center}
-   \caption{Full-size examples of novel images and their depth map rendered by our generalizable (GeoNeRF) and fine-tuned ($\text{GeoNeRF}_{\text{10k}}$) models. The images are from test scenes of the NeRF realistic synthetic dataset~\cite{mildenhall2020nerf}.}
-   \vspace{-2.5ex}
+   \caption{Full-size examples of novel images and their depth map rendered by our generalizable (GeoNeRF) and fine-tuned ($\text{GeoNeRF}_{\text{10k}}$) models. The images are from test scenes of the NeRF realistic synthetic dataset~\citep{mildenhall2020nerf}.}
     \label{fig:c3_supp_nerf}
 \end{figure}
 \FloatBarrier
@@ -516,7 +514,7 @@ Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{tab
         \end{threeparttable}
     \end{center}
     \vspace{3ex}
-    \caption{Per-scene Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models on real forward-facing LLFF dataset~\cite{mildenhall2019llff} in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics.}
+    \caption{Per-scene Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models on real forward-facing LLFF dataset~\citep{mildenhall2019llff} in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics.}
     \label{table:per_scene_no_ft_llff}
 \end{table}
 
@@ -569,7 +567,7 @@ Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{tab
         \end{threeparttable}
     \end{center}
     \vspace{3.0ex}
-    \caption{Per-scene Quantitative comparison of our fine-tuned GeoNeRF with per-scene optimized vanilla NeRF~\cite{mildenhall2020nerf} on real forward-facing LLFF dataset~\cite{mildenhall2019llff} in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics. Our model is fine-tuned on each scene for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$) and 1k iterations ($\text{GeoNeRF}_{\text{1k}}$), and NeRF~\cite{mildenhall2020nerf} is optimized for 200k iterations.}
+    \caption{Per-scene Quantitative comparison of our fine-tuned GeoNeRF with per-scene optimized vanilla NeRF~\citep{mildenhall2020nerf} on real forward-facing LLFF dataset~\citep{mildenhall2019llff} in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics. Our model is fine-tuned on each scene for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$) and 1k iterations ($\text{GeoNeRF}_{\text{1k}}$), and NeRF~\citep{mildenhall2020nerf} is optimized for 200k iterations.}
     \label{table:per_scene_ft_llff}
 \end{table}
 
@@ -627,7 +625,7 @@ Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{tab
         \end{threeparttable}
     \end{center}
     \vspace{3.0ex}
-    \caption{Per-scene Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models on NeRF realistic synthetic dataset~\cite{mildenhall2020nerf} in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics.}
+    \caption{Per-scene Quantitative comparison of our proposed GeoNeRF with existing generalizable NeRF models on NeRF realistic synthetic dataset~\citep{mildenhall2020nerf} in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics.}
     \label{table:per_scene_no_ft_nerf}
 \end{table}
 
@@ -680,21 +678,21 @@ Tables~\ref{table:per_scene_no_ft_llff}, \ref{table:per_scene_ft_llff}, \ref{tab
         \end{threeparttable}
     \end{center}
     \vspace{3.0ex}
-    \caption{Per-scene Quantitative comparison of our fine-tuned GeoNeRF with per-scene optimized vanilla NeRF~\cite{mildenhall2020nerf} on NeRF realistic synthetic dataset~\cite{mildenhall2020nerf} in terms of PSNR (higher is better), SSIM~\cite{wang2004image} (higher is better), and LPIPS~\cite{zhang2018unreasonable} (lower is better) metrics. Our model is fine-tuned on each scene for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$) and 1k iterations ($\text{GeoNeRF}_{\text{1k}}$), and NeRF~\cite{mildenhall2020nerf} is optimized for 500k iterations.}
+    \caption{Per-scene Quantitative comparison of our fine-tuned GeoNeRF with per-scene optimized vanilla NeRF~\citep{mildenhall2020nerf} on NeRF realistic synthetic dataset~\citep{mildenhall2020nerf} in terms of PSNR (higher is better), SSIM~\citep{wang2004image} (higher is better), and LPIPS~\citep{zhang2018unreasonable} (lower is better) metrics. Our model is fine-tuned on each scene for 10k iterations ($\text{GeoNeRF}_{\text{10k}}$) and 1k iterations ($\text{GeoNeRF}_{\text{1k}}$), and NeRF~\citep{mildenhall2020nerf} is optimized for 500k iterations.}
     \label{table:per_scene_ft_nerf}
 \end{table}
 
 \subsection{Ablation Study} \label{sec:c3_ablation}
-An ablation study of our generalizable model on the NeRF synthetic dataset~\cite{mildenhall2020nerf} and the real forward-facing dataset~\cite{mildenhall2019llff} is presented in Tables~\ref{table:ablation_nerf} and \ref{table:ablation_llff}, contrasting the effectiveness of individual components of our proposed model. We evaluated GeoNeRF in the cases where (a) no self-supervision loss is used, (b) no positional encoding is employed, (c) points on a ray are merely sampled uniformly, (d) occluded views are not excluded, (e) attention mechanism is removed from the renderer, (f) view-independent tokens are not regularized with the AE network before predicting volume densities, and (g) only a single cost volume is constructed per-view instead of cascaded multi-level cost volumes.
+An ablation study of our generalizable model on the NeRF synthetic dataset~\citep{mildenhall2020nerf} and the real forward-facing dataset~\citep{mildenhall2019llff} is presented in Tables~\ref{table:ablation_nerf} and \ref{table:ablation_llff}, contrasting the effectiveness of individual components of our proposed model. We evaluated GeoNeRF in the cases where (a) no self-supervision loss is used, (b) no positional encoding is employed, (c) points on a ray are merely sampled uniformly, (d) occluded views are not excluded, (e) attention mechanism is removed from the renderer, (f) view-independent tokens are not regularized with the AE network before predicting volume densities, and (g) only a single cost volume is constructed per-view instead of cascaded multi-level cost volumes.
 
-Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\cite{mildenhall2020nerf} for qualitative analysis corresponding to the experiments in Table~\ref{table:ablation_nerf}. The examples focus on challenging views of the scenes in order to contrast the behavior of the models properly.
+Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\citep{mildenhall2020nerf} for qualitative analysis corresponding to the experiments in Table~\ref{table:ablation_nerf}. The examples focus on challenging views of the scenes in order to contrast the behavior of the models properly.
 
 
 \begin{table}[!t]
 	\begin{center}
 		\begin{tabular}{l|ccc|c}
 			\hline
-                \multicolumn{5}{c}{NeRF Realistic Synthetic Dataset~\cite{mildenhall2020nerf}} \\
+                \multicolumn{5}{c}{NeRF Realistic Synthetic Dataset~\citep{mildenhall2020nerf}} \\
                 \hline
 			Experiment & PSNR$\uparrow$ &  SSIM$\uparrow$ & LPIPS$\downarrow$ & Examples \\
 			\hline
@@ -709,7 +707,7 @@ Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Ablation study of the key components of GeoNeRF. The evaluation is performed on the NeRF synthetic~\cite{mildenhall2020nerf} test scenes. See Section~\ref{sec:c3_ablation} for the details of these experiments, and see Figure~\ref{fig:c3_ablation} for qualitative analysis.}
+	\caption{Ablation study of the key components of GeoNeRF. The evaluation is performed on the NeRF synthetic~\citep{mildenhall2020nerf} test scenes. See Section~\ref{sec:c3_ablation} for the details of these experiments, and see Figure~\ref{fig:c3_ablation} for qualitative analysis.}
 	\label{table:ablation_nerf}
         \vspace{2ex}
 \end{table}
@@ -718,7 +716,7 @@ Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\
 	\begin{center}
 		\begin{tabular}{l|ccc}
 			\hline
-                \multicolumn{4}{c}{Real Forward Facing LLFF Dataset~\cite{mildenhall2019llff}} \\
+                \multicolumn{4}{c}{Real Forward Facing LLFF Dataset~\citep{mildenhall2019llff}} \\
                 \hline
 			Experiment & PSNR$\uparrow$ &  SSIM$\uparrow$ & LPIPS$\downarrow$ \\
 			\hline
@@ -733,7 +731,7 @@ Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\
 			\hline
 		\end{tabular}
 	\end{center}
-	\caption{Ablation study of the key components of GeoNeRF. The same evaluation of the experiments in Table~\ref{table:ablation_nerf} is performed on the real forward-facing LLFF~\cite{mildenhall2019llff} test scenes. See Section~\ref{sec:c3_ablation} for the details of these experiments.}
+	\caption{Ablation study of the key components of GeoNeRF. The same evaluation of the experiments in Table~\ref{table:ablation_nerf} is performed on the real forward-facing LLFF~\citep{mildenhall2019llff} test scenes. See Section~\ref{sec:c3_ablation} for the details of these experiments.}
 	\label{table:ablation_llff}
 \end{table}
 
@@ -741,12 +739,12 @@ Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\
 	\begin{center}
 		\includegraphics[width=1.0\linewidth]{images/chapter3/figures/ablation.jpg}
 	\end{center}
-	\caption{Qualitative ablation study of the key components of GeoNeRF. The examples are selected from challenging views of the NeRF synthetic dataset~\cite{mildenhall2020nerf}. Columns correspond to the experiments in Table~\ref{table:ablation_nerf}.}
+	\caption{Qualitative ablation study of the key components of GeoNeRF. The examples are selected from challenging views of the NeRF synthetic dataset~\citep{mildenhall2020nerf}. Columns correspond to the experiments in Table~\ref{table:ablation_nerf}.}
 	\label{fig:c3_ablation}
 \end{figure}
 
 \subsection{Limitations} \label{sec:c3_limitations}
-Our model with the experimental settings in the main article can be trained and evaluated on a single GPU with 16 GB of memory. Failure cases in our model could occur when the stereo reconstruction fails in the geometry reasoner, and the renderer is misled by incorrect geometry priors. Since the architecture of the geometry reasoner is inspired by multi-view stereo models, it is prone to failure in textureless areas similarly. Such failure examples are shown in Fig.~\ref{fig:c3_failure}.
+Our model with the experimental settings in Section~\ref{sec:c3_experiments} can be trained and evaluated on a single GPU with 16 GB of memory. Failure cases in our model could occur when the stereo reconstruction fails in the geometry reasoner, and the renderer is misled by incorrect geometry priors. Since the architecture of the geometry reasoner is inspired by multi-view stereo models, it is prone to failure in textureless areas similarly. Such failure examples are shown in Figure~\ref{fig:c3_failure}.
 
 \begin{figure}[!t]
 	\begin{center}
