@@ -34,7 +34,7 @@ Approaches like pixelNeRF~\citep{yu2021pixelnerf}, GRF~\citep{trevithick2021grf}
 
 In addition, with a slight modification to the architecture, we propose an alternate model that takes RGBD images (RGB+Depth) as input and exploits the depth information to improve its perception of the geometry~(Section~\ref{sec:c3_rgbd_method}).
 
-Concurrent to our work, the followings also introduce a generalizable NeRF: RGBD-Net~\citep{nguyen2021rgbd} builds a cost volume for the target view instead of source views, NeuralMVS\citep{rosu2021neuralmvs} proposes a coarse to fine approach to increase speed, and NeuRay~\cite{liu2021neural} proposes a method to deal with occlusions.
+Concurrent to our work, the followings also introduce a generalizable NeRF: RGBD-Net~\citep{nguyen2021rgbd} builds a cost volume for the target view instead of source views, NeuralMVS\citep{rosu2022neuralmvs} proposes a coarse to fine approach to increase speed, and NeuRay~\cite{liu2022neural} proposes a method to deal with occlusions.
 
 \section{Related Work} \label{sec:c3_related}
 
@@ -118,7 +118,7 @@ The primary loss function when we train our generalizable model on various scene
 \end{equation}
 where $R$ is the set of rays in each training batch and $c_{gt}$ is the ground truth color.
 
-DS-NeRF~\citep{deng2021depth} shows that depth supervision can help NeRF train faster with fewer input views. Moreover, numerous works~\citep{kaya2022neural, Oechsle2021ICCV, wang2021neus, yariv2021volume} show that despite the high-quality color rendering, NeRF has difficulty reconstructing 3D geometry and surface normals. Accordingly, for training samples coming from datasets with ground truth depths, we also output the predicted depth~$\boldsymbol{\hat{d}}$ for each ray and supervise it if the ground truth depth of that pixel is available:
+DS-NeRF~\citep{deng2022depth} shows that depth supervision can help NeRF train faster with fewer input views. Moreover, numerous works~\citep{kaya2022neural, Oechsle2021ICCV, wang2021neus, yariv2021volume} show that despite the high-quality color rendering, NeRF has difficulty reconstructing 3D geometry and surface normals. Accordingly, for training samples coming from datasets with ground truth depths, we also output the predicted depth~$\boldsymbol{\hat{d}}$ for each ray and supervise it if the ground truth depth of that pixel is available:
 \begin{equation}
     \mathcal{L}_{d} = \frac{1}{|R_{d}|} \sum_{r \in R_{d}}  \norm{ \boldsymbol{\hat{d}}(r) - d_{gt}(r)}_{s1}
 \end{equation}
