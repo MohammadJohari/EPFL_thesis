@@ -107,8 +107,7 @@ where $P_{r}^{fs}$ is a set of points on the ray~$r$ that lie between the camera
 
 For sample points close to the surface and within the truncation region, we use the signed distance objective, which leverages the depth sensor measurement to approximate the signed distance field:
 \begin{align}
-    &\mathcal{L}_{T}(P_{r}^{T}) = \notag \\
-    &\frac{1}{|R|} \sum_{r \in R} \frac{1}{|P_{r}^{T}|} \sum_{p \in P_{r}^{T}} \left( z(p) + \boldsymbol{\phi_{g}}(p) \cdot T - D(r) \right)^2
+    \mathcal{L}_{T}(P_{r}^{T}) = \frac{1}{|R|} \sum_{r \in R} \frac{1}{|P_{r}^{T}|} \sum_{p \in P_{r}^{T}} \left( z(p) + \boldsymbol{\phi_{g}}(p) \cdot T - D(r) \right)^2
 \end{align}
 where $z(p)$ is the planar depth of point~$p$ \wrt camera, $T$ is the truncation distance, $D(r)$ is the ray depth measured by the sensor, and $P_{r}^{T}$ is a set of points on the ray~$r$ that lie in the truncation region, \ie $|z(p) - D(r)| < T$. We apply the same loss to all points in the truncation region, but we differentiate the importance of points that are closer to the surface in the middle of the truncation region~$P_{r}^{T\text{-}m}$ from those that are at the tail of the truncation region~$P_{r}^{T\text{-}t}$. Formally, we define $P_{r}^{T\text{-}m}$ as a set of points that $|z(p) - D(r)| < 0.4T$, and define $P_{r}^{T\text{-}t} = P_{r}^{T} - P_{r}^{T\text{-}m}$, then:
 \begin{align}
@@ -138,8 +137,8 @@ where $\{\lambda_{fs}, \lambda_{T\text{-}m}, \lambda_{T\text{-}t}, \lambda_{d}, 
     \begin{center}
         \begin{tabular}{l|cccc}
             \Xhline{2\arrayrulewidth}
-            \multirow{3}{*}{Method} \\
-            & \multicolumn{4}{c}{Reconstruction (cm)} \\
+            \multirow{3}{*}{Method} & \multicolumn{4}{c}{\multirow{2}{*}{Reconstruction (cm)}} \\
+            \\
             & Depth L1$\downarrow$ & Acc.$\downarrow$ & Comp.$\downarrow$ & Comp. Ratio (\%)$\uparrow$ \\
             
             \hline
@@ -148,8 +147,8 @@ where $\{\lambda_{fs}, \lambda_{T\text{-}m}, \lambda_{T\text{-}t}, \lambda_{d}, 
             ESLAM (ours) & \textbf{1.18 $\pm$ 0.05} & \textbf{0.97 $\pm$ 0.02} & \textbf{1.05 $\pm$ 0.01} & \textbf{98.60 $\pm$ 0.07} \\
 
             \cline{2-5}
+            & \multicolumn{4}{c}{\multirow{2}{*}{Localization (cm)}} \\
             \\
-            & \multicolumn{4}{c}{Localization (cm)} \\
             & \multicolumn{2}{c}{ATE Mean$\downarrow$} & \multicolumn{2}{c}{ATE RMSE$\downarrow$} \\
             \cline{2-5}
             iMAP$^{*}$ & \multicolumn{2}{c}{2.59 $\pm$ 0.58} & \multicolumn{2}{c}{3.42 $\pm$ 0.87} \\
@@ -287,7 +286,7 @@ Since the ground truth meshes of the ScanNet dataset~\citep{dai2017scannet} are 
 \end{table}
 
 \vspace{1ex}
-\noindent\textbf{Evaluation on TUM RGB-D~\cite{sturm2012benchmark}.} To further contrast the robustness of our method with the existing ones, we conduct an evaluation study on the real-world TUM RGB-D dataset~\citep{sturm2012benchmark}. Since there are no ground truth meshes for the scenes in this dataset, we only present the localization results in Table~\ref{table:tum} and the qualitative analysis of rendered meshes in Figure~\ref{fig:c4_qualitative_tum}.
+\noindent\textbf{Evaluation on TUM RGB-D~\citep{sturm2012benchmark}.} To further contrast the robustness of our method with the existing ones, we conduct an evaluation study on the real-world TUM RGB-D dataset~\citep{sturm2012benchmark}. Since there are no ground truth meshes for the scenes in this dataset, we only present the localization results in Table~\ref{table:tum} and the qualitative analysis of rendered meshes in Figure~\ref{fig:c4_qualitative_tum}.
 
 \begin{table}[!t]    
     \begin{center}
