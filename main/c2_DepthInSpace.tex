@@ -441,42 +441,42 @@ Lastly, Figure~\ref{fig:c2_visualize_masks} exemplifies the behavior of each bin
         \hline
         \multirow{2}{*}{$\boldsymbol{N}$} & \multicolumn{2}{c|}{Fusion Blocks} & \multicolumn{3}{c|}{Network Components} & \multicolumn{3}{c|}{Binary Masks Criteria} & \multicolumn{4}{c|}{Metrics [\%]} &
         \multirow{2}{*}{Examples}\\
-        & \small Num. & \small Ch. & \small 2D Fus. & \small 3D Fus. & \small Ref. & \small $\boldsymbol{M'_{FB}}$ & \small $\boldsymbol{M'_{RF}}$ & \small $\boldsymbol{M'_{VC}}$ & $o(0.5)$ & $o(1)$ & $o(2)$ & $o(5)$ \\
+        & Num. & Ch. & 2D Fus. & 3D Fus. & Ref. & $\boldsymbol{M'_{FB}}$ & $\boldsymbol{M'_{RF}}$ & $\boldsymbol{M'_{VC}}$ & $o(0.5)$ & $o(1)$ & $o(2)$ & $o(5)$ \\
         \hline
         \noalign{\vskip 0.25mm}    
-        \multicolumn{14}{l}{\small Experiment 1: Effect of the number of fused frames~$\boldsymbol{N}$.} \\
+        \multicolumn{14}{l}{Experiment 1: Effect of the number of fused frames~$\boldsymbol{N}$.} \\
         \hline
         % Number of frames experiments
-        2 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.90 & 0.83 & 0.37 & 0.10 & Fig. \ref{fig:c2_ablation_mf_n}.c \\
-        3 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.73 & 0.75 & 0.34 & 0.10 & Fig. \ref{fig:c2_ablation_mf_n}.d \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Fig. \ref{fig:c2_ablation_mf_n}.e \\
+        2 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.90 & 0.83 & 0.37 & 0.10 & Figure~\ref{fig:c2_ablation_mf_n}.c \\
+        3 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.73 & 0.75 & 0.34 & 0.10 & Figure~\ref{fig:c2_ablation_mf_n}.d \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Figure~\ref{fig:c2_ablation_mf_n}.e \\
         \hline
         \noalign{\vskip 0.25mm}
-        \multicolumn{14}{l}{\small Experiment 2: Effect of the number of fusion blocks and their channel size.} \\        
+        \multicolumn{14}{l}{Experiment 2: Effect of the number of fusion blocks and their channel size.} \\
         \hline
         % Fusion blocks experiments
-        4 & 2 & 48 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.59 & 0.72 & 0.33 & 0.10 & Fig. \ref{fig:c2_ablation_mf_blch}.c \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Fig. \ref{fig:c2_ablation_mf_blch}.d \\
-        4 & 6 & 24 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.62 & 0.72 & 0.33 & 0.10 & Fig. \ref{fig:c2_ablation_mf_blch}.e \\
-        4 & 8 & 16 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.60 & 0.73 & 0.33 & 0.10 & Fig. \ref{fig:c2_ablation_mf_blch}.f \\
+        4 & 2 & 48 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.59 & 0.72 & 0.33 & 0.10 & Figure~\ref{fig:c2_ablation_mf_blch}.c \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Figure~\ref{fig:c2_ablation_mf_blch}.d \\
+        4 & 6 & 24 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.62 & 0.72 & 0.33 & 0.10 & Figure~\ref{fig:c2_ablation_mf_blch}.e \\
+        4 & 8 & 16 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.60 & 0.73 & 0.33 & 0.10 & Figure~\ref{fig:c2_ablation_mf_blch}.f \\
         \hline
         \noalign{\vskip 0.25mm}
-        \multicolumn{14}{l}{\small Experiment 3: Each processing component's efficacy in the network architecture.} \\      
+        \multicolumn{14}{l}{Experiment 3: Each processing component's efficacy in the network architecture.} \\
         \hline
         % Network components experiments
-        4 & 4 & 32 & $\circ$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.58 & 0.72 & 0.33 & 0.10 & Fig. \ref{fig:c2_ablation_mf_2d3d}.c \\
-        4 & 4 & 32 & $\bullet$ & $\circ$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.74 & 0.74 & 0.34 & 0.11 & Fig. \ref{fig:c2_ablation_mf_2d3d}.d \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\circ$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.98 & 1.04 & 0.50 & 0.13 & Fig. \ref{fig:c2_ablation_mf_2d3d}.e \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Fig. \ref{fig:c2_ablation_mf_2d3d}.f \\
+        4 & 4 & 32 & $\circ$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.58 & 0.72 & 0.33 & 0.10 & Figure~\ref{fig:c2_ablation_mf_2d3d}.c \\
+        4 & 4 & 32 & $\bullet$ & $\circ$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.74 & 0.74 & 0.34 & 0.11 & Figure~\ref{fig:c2_ablation_mf_2d3d}.d \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\circ$ & $\bullet$ & $\bullet$ & $\bullet$ & 1.98 & 1.04 & 0.50 & 0.13 & Figure~\ref{fig:c2_ablation_mf_2d3d}.e \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Figure~\ref{fig:c2_ablation_mf_2d3d}.f \\
         \hline
         \noalign{\vskip 0.25mm}
-        \multicolumn{14}{l}{\small Experiment 4: Impact of the validation binary masks on the performance.} \\
+        \multicolumn{14}{l}{Experiment 4: Impact of the validation binary masks on the performance.} \\
         \hline
         % Masks experiments
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\circ$ & $\circ$ & 2.19 & 1.11 & 0.53 & 0.14 & Fig. \ref{fig:c2_ablation_mf_masks}.c \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\circ$ & $\bullet$ & 1.63 & 0.71 & 0.33 & 0.10 & Fig. \ref{fig:c2_ablation_mf_masks}.d \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\circ$ & 1.88 & 0.91 & 0.42 & 0.11 & Fig. \ref{fig:c2_ablation_mf_masks}.e \\
-        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Fig. \ref{fig:c2_ablation_mf_masks}.f \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\circ$ & $\circ$ & 2.19 & 1.11 & 0.53 & 0.14 & Figure~\ref{fig:c2_ablation_mf_masks}.c \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\circ$ & $\bullet$ & 1.63 & 0.71 & 0.33 & 0.10 & Figure~\ref{fig:c2_ablation_mf_masks}.d \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\circ$ & 1.88 & 0.91 & 0.42 & 0.11 & Figure~\ref{fig:c2_ablation_mf_masks}.e \\
+        4 & 4 & 32 & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & $\bullet$ & \textbf{1.58} & \textbf{0.71} & \textbf{0.32} & \textbf{0.10} & Figure~\ref{fig:c2_ablation_mf_masks}.f \\
         \hline
         \end{tabular}
     \end{center}

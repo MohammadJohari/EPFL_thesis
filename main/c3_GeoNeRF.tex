@@ -189,7 +189,6 @@ where $Q(\cdot)$ maps and quantizes real depth values to the depth plane indices
             \hline
             \end{tabular}
             \begin{tablenotes}
-                \small
                 \item[\dag] The evaluations of the baselines on the DTU MVS dataset~\citep{jensen2014large} are borrowed from the paper MVSNeRF~\citep{chen2021mvsnerf}. Also, metrics are calculated for all methods on this dataset on foreground pixels, whose ground truth depths stand inside the scene bound.
             \end{tablenotes}
         \end{threeparttable}
@@ -220,7 +219,6 @@ where $Q(\cdot)$ maps and quantizes real depth values to the depth plane indices
             \hline
             \end{tabular}
             \begin{tablenotes}
-                \small
                 \item[\dag] For fine-tuning, MVSNeRF~\citep{chen2021mvsnerf} discards its CNNs and directly optimizes 3D features. Direct optimization without regularization severely suffers from overfitting which is not reflected in their reported accuracy because their evaluation is done on a custom test set instead of the standard one. \textit{E.g.}, their PSNR on NeRF dataset~\citep{mildenhall2020nerf} would drop from \textbf{27.07} to \textbf{20.02} if it was evaluated on the standard test set.
             \end{tablenotes}
         \end{threeparttable}
@@ -381,7 +379,6 @@ The network architectures of Feature Pyramid Network (FPN), 3D regularizer ($R^{
     \end{center}
     \caption{Network architecture of Feature Pyramid Network (FPN), where \textit{feat2}, \textit{feat1}, and \textit{feat0} are output feature pyramids. Conv($c_{in}$, $c_{out}$, $k$, $s$) stands for a 2D convolution with input channels~$c_{in}$, output channels~$c_{out}$, kernel size of~$k$, and stride of~$s$. ConvBnReLU represents a Conv layer followed by Batch Normalization and ReLU nonlinearity. Upsample\_and\_Add($x$, $y$) adds $y$ to the bilinearly upsampled of $x$.}
     \label{table:arch_fpn}
-    \vspace{4ex}
 \end{table}
 
 \begin{table}[t]
@@ -710,7 +707,7 @@ Figure~\ref{fig:c3_ablation} contains examples from the NeRF synthetic dataset~\
 	\end{center}
 	\caption{Ablation study of the key components of GeoNeRF. The evaluation is performed on the NeRF synthetic~\citep{mildenhall2020nerf} test scenes. See Section~\ref{sec:c3_ablation} for the details of these experiments, and see Figure~\ref{fig:c3_ablation} for qualitative analysis.}
 	\label{table:ablation_nerf}
-        \vspace{2ex}
+        \vspace{6ex}
 \end{table}
 
 \begin{table}[!t]
