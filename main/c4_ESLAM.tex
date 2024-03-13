@@ -6,7 +6,7 @@
     \textbf{Johari, M. M.}, Carta, C., and Fleuret, F. (2023). ESLAM: Efficient Dense SLAM System Based on Hybrid Representation of Signed Distance Fields. In \textit{Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)}, pages 17408-17419. Selected as a \textbf{Highlight Paper} (Top 2.5\%).
 \end{tcolorbox}
 
-\section{Chapter Abstract}
+\section{Abstract}
 
 We present ESLAM, an efficient implicit neural representation method for Simultaneous Localization and Mapping (SLAM). ESLAM reads RGB-D frames with unknown camera poses in a sequential manner and incrementally reconstructs the scene representation while estimating the current camera position in the scene. We incorporate the latest advances in Neural Radiance Fields (NeRF) into a SLAM system, resulting in an efficient and accurate dense visual SLAM method. Our scene representation consists of multi-scale axis-aligned perpendicular feature planes and shallow decoders that, for each point in the continuous space, decode the interpolated features into Truncated Signed Distance Field (TSDF) and RGB values. Our extensive experiments on three standard datasets, Replica, ScanNet, and TUM RGB-D show that ESLAM improves the accuracy of 3D reconstruction and camera localization of state-of-the-art dense visual SLAM methods by more than 50\%, while it runs up to $\times$10 faster and does not require any pre-training. The implementation source code and visualization videos showcasing the obtained results can be accessed through the following link: \href{https://www.idiap.ch/paper/eslam}{https://www.idiap.ch/paper/eslam}
 
@@ -17,7 +17,7 @@ We present ESLAM, an efficient implicit neural representation method for Simulta
    \caption{Our pre-train-free ESLAM model reconstructs scene details more accurately than existing works: iMAP$^*$~\citep{sucar2021imap} and NICE-SLAM~\citep{zhu2022nice}, while it runs up to $\times$10 faster (see Section~\ref{sec:c4_runtime} for runtime analysis). The ground truth image is rendered with ReplicaViewer~\citep{replica19arxiv}.}
 \end{figure}
 
-\section{Chapter Introduction}
+\section{Introduction}
 
 Dense visual Simultaneous Localization and Mapping (SLAM) is a fundamental challenge in 3D computer vision with several applications such as autonomous driving, robotics, and virtual/augmented reality. It is defined as constructing a 3D map of an unknown environment while simultaneously approximating the camera pose.
 

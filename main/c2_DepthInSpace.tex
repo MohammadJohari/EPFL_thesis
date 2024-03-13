@@ -6,11 +6,11 @@
     \textbf{Johari, M. M.}, Carta, C., and Fleuret, F. (2021). DepthInSpace: Exploitation and Fusion of Multiple Video Frames for Structured-Light Depth Estimation. In \textit{Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)}, pages 6039-6048.
 \end{tcolorbox}
 
-\section{Chapter Abstract}
+\section{Abstract}
 
 We present DepthInSpace, a self-supervised deep-learning method for depth estimation using a structured-light camera. The design of this method is motivated by the commercial use case of embedded depth sensors in nowadays smartphones. We first propose to use the estimated optical flow from ambient information of multiple video frames as a complementary guide for training a single-frame depth estimation network, helping to preserve edges and reduce over-smoothing issues. Utilizing optical flow, we also propose to fuse the data of multiple video frames to get a more accurate depth map. In particular, fused depth maps are more robust in occluded areas and incur less in flying pixel artifacts. We finally demonstrate that these more precise fused depth maps can be used as self-supervision for fine-tuning a single-frame depth estimation network to improve its performance. Our models' effectiveness is evaluated and compared with state-of-the-art models on both synthetic and our newly introduced real datasets. The implementation source code, training recipe, and both synthetic and captured real datasets are available in the following link: \href{https://www.idiap.ch/paper/depthinspace}{https://www.idiap.ch/paper/depthinspace}.
 
-\section{Chapter Introduction}
+\section{Introduction}
 
 With the advent of structured-light cameras, depth-sensing became conceivable with basic algorithms implementable on devices with computational constraints in real time. For instance, Kinect V1 uses a correlation-based block matching technique~\citep{scharstein2002taxonomy}, and Intel RealSense~\citep{keselman2017intel} employs a semi-global matching scheme~\citep{hirschmuller2007stereo}. However, learning-based approaches in this field are relatively limited. \cite{ryan2017low} propose a computationally efficient feature-matching method. Projecting image patches to compact binary representation is proposed in UltraStereo~\citep{fanello2017ultrastereo} to achieve a low-complex matching scheme. HyperDepth~\citep{ryan2016hyperdepth} casts the problem of depth estimation as a classification-regression task, which it solves using an ensemble of cascaded random forests. However, HyperDepth assumes the availability of ground-truth labels either from high-accuracy sensors or exhaustive stereo-matching search algorithms.
 
@@ -23,7 +23,7 @@ We take the work by~\cite{riegler2019connecting} as the baseline, and our contri
 \item We finally propose to exploit the resulting fused disparity maps to fine-tune a single-frame disparity estimation network.
 \end{itemize}
 
-\section{Related Works} \label{sec:c2_related_work}
+\section{Related Work} \label{sec:c2_related_work}
 
 \noindent\textbf{Active Depth Estimation:} The setup usually consists of a camera and a projector which projects a random but known pattern of dots into the scene. Depending on the depth of objects in the environment, the camera receives a deformed shape of the projected pattern, and this phenomenon could be used in depth estimation algorithms. Such algorithms include basic searching for correspondences in Kinect V1~\citep{martinez2013kinect}, computationally efficient learning-based techniques~\citep{fanello2017ultrastereo, ryan2016hyperdepth, chen2014fast}, and a deep neural network trained end-to-end to estimate disparity map directly~\citep{zhang2018activestereonet, kleitsiotis2019color, riegler2019connecting}.
 
